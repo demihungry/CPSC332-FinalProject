@@ -1,11 +1,11 @@
+INSERT INTO Department
+VALUES (1234123789, 'Computer Science', 'CS-522', 4698127351),
+(4097647128, 'Anthropology', 'MH-426', 1958463279);
+
 INSERT INTO Professor
 VALUES (273546189, 1234123789, 'Evelyn Reed', 8641372591, 'Professor', 120000, 'F', '1234 East Road', 'Long Beach', 'CA', 98617),
 (567439894, 1234123789,  'James Maxwell', 1956724833, 'Professor', 150090, 'M', '7859 Summer Lane', 'Tampa', 'FL', 65378),
 (741392843, 4097647128,  'Eleanor Vance', 4763896738, 'Professor', 175000, 'F', '384 Garnet Boulevard', 'Birmingham', 'AL', 45637);
-
-INSERT INTO Department
-VALUES (1234123789, 'Computer Science', 'CS-522', 4698127351),
-(4097647128, 'Anthropology', 'MH-426', 1958463279);
 
 INSERT INTO Course
 VALUES (305, 4097647128,  'Anthropology', 3, 'Anthropology of Religion', 'NONE'),
