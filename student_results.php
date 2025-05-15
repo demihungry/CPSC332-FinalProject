@@ -1,14 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Search Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
 <?php
 
-$servername = "localhost";
-$username = "demi";
-$password = "5236";
-$dbname = "cpsc332";
-
-//$servername = "ecs.fullerton.edu";
-//$username = "cs332u5";
-//$password = "5L5TtTHs";
-//$dbname = "cs332u5";
+$servername = "mariadb";
+$username = "cs332u5";
+$password = "5L5TtTHs";
+$dbname = "cs332u5";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -32,7 +36,7 @@ if (!empty($course)) {
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        echo "<table><tr><th>Section Number</th><th>Room</th><th>Start Time</th><th>End Time</th><th>Days</th><th>Enrolled Students</th></tr>";
+        echo "<table border='1'><tr><th>Section Number</th><th>Room</th><th>Start Time</th><th>End Time</th><th>Days</th><th>Enrolled Students</th></tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr><td>" . $row["Snumber"] . "</td><td>" . $row["Room"] . "</td><td>" . $row["Starttime"] . "</td><td>" . $row["Endtime"] . "</td><td>" . $row["Days"] . "</td><td>" . $row["Enrolled"] . "</td></tr>";
         }
@@ -51,7 +55,7 @@ if (!empty($course)) {
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        echo "<table><tr><th>Course Number</th><th>Grade</th></tr>";
+        echo "<table border='1'><tr><th>Course Number</th><th>Grade</th></tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr><td>" . $row["Cnumber"] . "</td><td>" . $row["Grade"] . "</td></tr>";
         }
@@ -69,3 +73,6 @@ $conn->close();
 <a href="student.php"><button>Go back to search page</button></a>
 <br>
 <a href="index.php"><button>Home</button></a>
+
+</body>
+</html>

@@ -1,27 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professor Search Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
 <?php
 
-$servername = "localhost";
-$username = "demi";
-$password = "5236";
-$dbname = "cpsc332";
-
-//$servername = "ecs.fullerton.edu";
-//$username = "cs332u5";
-//$password = "5L5TtTHs";
-//$dbname = "cs332u5";
+$servername = "mariadb";
+$username = "cs332u5";
+$password = "5L5TtTHs";
+$dbname = "cs332u5";
 
 // Create connection
-//$conn = new mysqli($servername, $username, $password, $dbname);
-//if ($conn->connect_error) {
-//    die("Connection failed: " . $conn->connect_error);
-//}
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 $course = $_GET['course'];
@@ -36,13 +32,12 @@ if (!empty($ssn)) {
                 AND Professor.Dnumber = Department.Dnumber 
                 AND Department.Dnumber = Course.Dnumber 
                 AND Course.Cnumber = CourseSection.Cnumber;";
+    
+    $result = $conn->query($sql);
 
-    $stmt = $conn->prepare($sql);
-    $stmt->execute(['ssn' => $ssn]);
-
-    if ($stmt->rowCount() > 0) {
-        echo "<table><tr><th>Title</th><th>Room</th><th>Days</th><th>Start Time</th><th>End Time</th></tr>";
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if ($result->num_rows > 0) {
+        echo "<table border='1'><tr><th>Title</th><th>Room</th><th>Days</th><th>Start Time</th><th>End Time</th></tr>";
+        while ($row = $result->fetch_assoc()) {
             echo "<tr><td>" . $row["Title"] . "</td><td>" . $row["Room"] . "</td><td>" . $row["Days"] . "</td><td>" . $row["Starttime"] . "</td><td>" . $row["Endtime"] . "</td></tr>";
         }
         echo "</table>";
@@ -50,7 +45,7 @@ if (!empty($ssn)) {
         echo "No results found.";
     }
 } elseif (!empty($course) && !empty($section)) {
-    $sql = "SELECT Count(Distinct Student.Cwid) AS Count, Enrollment.grade
+    $sql = "SELECT Count(Distinct Student.Cwid) AS Count, Enrollment.Grade
             FROM Course, CourseSection, Enrollment, Student
             WHERE Course.Cnumber = '$course'
                 AND CourseSection.Snumber = '$section' 
@@ -81,3 +76,6 @@ $conn->close();
 <a href="professor.php"><button>Go back to search page</button></a>
 <br>
 <a href="index.php"><button>Home</button></a>
+
+</body>
+</html>
